@@ -6,6 +6,7 @@ import VideoList from 'src/Components/VideoList';
 import 'src/App.css'
 
 interface IState {
+  hubConnection: any,
   updateVideoList: any,
   player: any,
   playingURL: string
@@ -13,14 +14,30 @@ interface IState {
 }
 
 class App extends React.Component<{}, IState>{
+  public signalR = require("@aspnet/signalr");
   public constructor(props: any) {
     super(props);
     this.state = {
+      hubConnection: new this.signalR.HubConnectionBuilder().withUrl("https://localhost:44307/hub").build(),
       player: null,
       playingURL: "",
       updateVideoList: null,
       videoList: [],
     }
+  }
+
+  public componentDidMount = () => {
+
+    this.state.hubConnection.on("Connected", ()  => {
+      console.log('A new user has connected to the hub.');
+    });
+
+    this.state.hubConnection.on("UpdateVideoList", ()  => {
+      this.state.updateVideoList();
+      console.log('A new video has been added!');
+    });
+
+    this.state.hubConnection.start().then(() => this.state.hubConnection.invoke("BroadcastMessage"));
   }
 
   public setRef = (playerRef: any) => {
@@ -31,7 +48,7 @@ class App extends React.Component<{}, IState>{
 
   public addVideo = (url: string) => {
     const body = {"url": url}
-    fetch("https://scriberapi.azurewebsites.net/api/Videos", {
+    fetch("https://localhost:44307/api/Videos", {
       body: JSON.stringify(body),
       headers: {
         Accept: "text/plain",
@@ -40,7 +57,7 @@ class App extends React.Component<{}, IState>{
       method: "POST"
     }).then(() => {
       this.state.updateVideoList();
-    })
+    }).then(() => {this.state.hubConnection.invoke("AddVideo")});
   }
 
   public updateURL = (url: string) => {

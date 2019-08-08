@@ -22,7 +22,7 @@ export default class VideoList extends React.Component<IProps,IState>{
     }
 
     public deleteVideo = (id:any) => {
-        fetch("https://scriberapi.azurewebsites.net/api/Videos/"+id,{
+        fetch("https://localhost:44307/api/Videos/"+id,{
             method:'DELETE'
         }).then(() => {
             this.updateList()
@@ -34,14 +34,14 @@ export default class VideoList extends React.Component<IProps,IState>{
     }
 
     public updateList = () => {
-        fetch('https://scriberapi.azurewebsites.net/api/Videos',{
+        fetch('https://localhost:44307/api/Videos',{
             method:'GET'
         }).then((ret:any) => {
             return ret.json();
         }).then((result:any) => {
             const output:any[] = []
             result.forEach((video:any) => {
-                const row = (<tr>
+                const row = (<tr key = {`${Math.random()} ${Math.random()}`}>
                     <td className="align-middle" onClick={() => this.handleLike(video)}>{video.isFavourite === true?<Star/>:<StarBorder/>}</td>
                     <td className="align-middle" onClick={() => this.playVideo(video.webUrl)}><img src={video.thumbnailUrl} width="100px" alt="Thumbnail"/></td>
                     <td className="align-middle" onClick={() => this.playVideo(video.webUrl)}><b>{video.videoTitle}</b></td>
@@ -64,7 +64,7 @@ export default class VideoList extends React.Component<IProps,IState>{
             "path":"/isFavourite",
             "value":!video.isFavourite,
         }]
-        fetch("https://scriberapi.azurewebsites.net/api/Videos/update/"+video.videoId, {
+        fetch("https://localhost:44307/api/Videos/update/"+video.videoId, {
             body:JSON.stringify(toSend),
             headers: {
               Accept: "text/plain",
@@ -88,7 +88,9 @@ export default class VideoList extends React.Component<IProps,IState>{
             <div className="video-list">
                 <h1 className="play-heading"><span className="red-heading">play</span>video</h1>
                 <table className="table">
-                    {this.state.videoList}
+                    <tbody>
+                        {this.state.videoList}
+                    </tbody>
                 </table>
             </div>
         )

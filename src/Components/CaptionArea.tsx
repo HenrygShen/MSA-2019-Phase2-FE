@@ -30,7 +30,7 @@ export default class CaptionArea extends React.Component<IProps, IState>{
         if(this.state.input.trim() === ""){
             this.setState({result:[]},()=>this.makeTableBody())
         }else{
-            fetch("https://scriberapi.azurewebsites.net/api/Videos/SearchByTranscriptions/"+this.state.input, {
+            fetch("https://localhost:44307/api/Videos/SearchByTranscriptions/"+this.state.input, {
                 headers: {
                   Accept: "text/plain"
                 },
@@ -115,11 +115,13 @@ export default class CaptionArea extends React.Component<IProps, IState>{
                 </div>
                 <br />
                 <table className="table">
-                    <tr>
-                        <th>Time</th>
-                        <th>Caption</th>
-                        <th>Video</th>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <th>Time</th>
+                            <th>Caption</th>
+                            <th>Video</th>
+                        </tr>
+                    </tbody>
                     <tbody className="captionTable">
                         {this.state.body}
                     </tbody>
