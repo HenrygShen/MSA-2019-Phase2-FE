@@ -34,7 +34,6 @@ class App extends React.Component<{}, IState>{
 
     this.state.hubConnection.on("UpdateVideoList", ()  => {
       this.state.updateVideoList();
-      console.log('A new video has been added!');
     });
 
     this.state.hubConnection.start().then(() => this.state.hubConnection.invoke("BroadcastMessage"));
@@ -57,7 +56,7 @@ class App extends React.Component<{}, IState>{
       method: "POST"
     }).then(() => {
       this.state.updateVideoList();
-    }).then(() => {this.state.hubConnection.invoke("AddVideo")});
+    }).then(() => {this.state.hubConnection.invoke("UpdateVideos")});
   }
 
   public updateURL = (url: string) => {

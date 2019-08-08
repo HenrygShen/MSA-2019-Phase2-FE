@@ -29,7 +29,7 @@ export default class VideoList extends React.Component<IProps,IState>{
             method:'DELETE'
         }).then(() => {
             this.updateList()
-        }).then(() => {this.state.hubConnection.invoke("DeleteVideo")});
+        }).then(() => {this.state.hubConnection.invoke("UpdateVideos")});
     }
 
     public playVideo = (videoUrl:string) => {
@@ -76,16 +76,15 @@ export default class VideoList extends React.Component<IProps,IState>{
             method: "PATCH"
           }).then(() => {
               this.updateList();
-          })
+          }).then(() => {this.state.hubConnection.invoke("UpdateVideos")});
     }
     
     public componentDidMount = () => {
         this.props.mount(this.updateList)
         this.updateList()
 
-        this.state.hubConnection.on("VideoDeleted", ()  => {
+        this.state.hubConnection.on("UpdateVideoList", ()  => {
             this.updateList();
-            console.log('A video has been deleted!');
         });
     
         this.state.hubConnection.start().then(() => this.state.hubConnection.invoke("BroadcastMessage"));
