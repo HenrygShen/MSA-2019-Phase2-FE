@@ -6,7 +6,7 @@ import * as React from 'react'
 interface IState{
     hubConnection: any,
     videoList: any
-}
+} 
 
 interface IProps{
     mount:any
@@ -45,7 +45,7 @@ export default class VideoList extends React.Component<IProps,IState>{
             const output:any[] = []
             result.forEach((video:any) => {
                 const row = (<tr key = {`${Math.random()} ${Math.random()}`}>
-                    <td className="align-middle" onClick={() => this.handleLike(video)}>{video.isFavourite === true?<Star/>:<StarBorder/>}</td>
+                    <td className="align-middle" onClick={() => this.handleLike(video)}>{video.isFavourite === true?<Star color="primary"/>:<StarBorder/>}</td>
                     <td className="align-middle" onClick={() => this.playVideo(video.webUrl)}><img src={video.thumbnailUrl} width="100px" alt="Thumbnail"/></td>
                     <td className="align-middle" onClick={() => this.playVideo(video.webUrl)}><b>{video.videoTitle}</b></td>
                     <td className="align-middle video-list-close"><button onClick={() => this.deleteVideo(video.videoId)}><Close/></button></td>

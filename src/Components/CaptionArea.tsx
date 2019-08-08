@@ -86,6 +86,11 @@ export default class CaptionArea extends React.Component<IProps, IState>{
         }
     }
 
+    public keyPress = (e:any) => {
+        if(e.keyCode === 13){
+            this.search()
+        }
+    }
     public render() {
         return (
             <div className="caption-area">
@@ -103,6 +108,7 @@ export default class CaptionArea extends React.Component<IProps, IState>{
                             variant="outlined"
                             onChange={(event: any) => this.setState({ input: event.target.value })}
                             value={this.state.input}
+                            onKeyDown={this.keyPress}
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">
                                     <IconButton onClick={() => this.search()}>

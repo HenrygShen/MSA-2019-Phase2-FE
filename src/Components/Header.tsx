@@ -24,6 +24,12 @@ export default class Header extends React.Component<IProps,IState> {
         this.props.addVideo(this.state.input)
     }
 
+    public keyPress = (e:any) => {
+        if(e.keyCode === 13){
+            this.addVideo()
+        }
+    }
+
     public render() {
         return (
             <div className="header">
@@ -40,6 +46,7 @@ export default class Header extends React.Component<IProps,IState> {
                             margin="normal"
                             variant="outlined"
                             onChange = { (event: any ) => this.setState({input:event.target.value})}
+                            onKeyDown={this.keyPress}
                             value = {this.state.input}
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">
