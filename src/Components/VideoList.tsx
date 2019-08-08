@@ -4,6 +4,7 @@ import StarBorder from '@material-ui/icons/StarBorder'
 import * as React from 'react'
 
 interface IState{
+    hubConnection: any,
     videoList: any
 }
 
@@ -13,9 +14,11 @@ interface IProps{
 }
 
 export default class VideoList extends React.Component<IProps,IState>{
+    public signalR = require("@aspnet/signalr");
     public constructor(props:any){
         super(props);
         this.state = {
+            hubConnection: new this.signalR.HubConnectionBuilder().withUrl("https://localhost:44307/hub").build(),
             videoList: []
         }
         this.updateList();
@@ -26,7 +29,7 @@ export default class VideoList extends React.Component<IProps,IState>{
             method:'DELETE'
         }).then(() => {
             this.updateList()
-        })
+        }).then(() => {this.state.hubConnection.invoke("DeleteVideo")});
     }
 
     public playVideo = (videoUrl:string) => {
@@ -79,6 +82,13 @@ export default class VideoList extends React.Component<IProps,IState>{
     public componentDidMount = () => {
         this.props.mount(this.updateList)
         this.updateList()
+
+        this.state.hubConnection.on("VideoDeleted", ()  => {
+            this.updateList();
+            console.log('A video has been deleted!');
+        });
+    
+        this.state.hubConnection.start().then(() => this.state.hubConnection.invoke("BroadcastMessage"));
     }
 
 
