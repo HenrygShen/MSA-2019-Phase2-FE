@@ -1,0 +1,16 @@
+.header-container {
+    padding: 1%;
+    padding-left: 3%;
+    padding-right: 3%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.custom-button {
+    width: 20px;
+    height: 20px;
+}
+
+.search-bar {
+    margin-right: 10px;
+}

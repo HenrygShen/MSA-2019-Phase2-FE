@@ -1,0 +1,15 @@
+.caption-header {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.custom-button {
+    width: 20px;
+    height: 20px;
+}
+
+.search-bar {
+    margin-right: 10px;
+}

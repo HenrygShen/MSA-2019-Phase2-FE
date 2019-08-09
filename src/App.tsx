@@ -1,8 +1,8 @@
 import * as React from 'react';
 import ReactPlayer from 'react-player';
-import CaptionArea from 'src/Components/CaptionArea';
-import Header from 'src/Components/Header';
-import VideoList from 'src/Components/VideoList';
+import CaptionArea from 'src/Components/CaptionArea/CaptionArea';
+import Header from 'src/Components/Header/Header';
+import VideoList from 'src/Components/VideoList/VideoList';
 import 'src/App.css'
 
 interface IState {
