@@ -13,3 +13,34 @@
 .search-bar {
     margin-right: 10px;
 }
+
+.transcription-table {
+    max-height: 40vh;
+    overflow-y: auto;
+}
+
+#transcriptions {
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+#transcriptions td, #transcriptions th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#transcriptions tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+#transcriptions tr:hover {
+    background-color: #ddd;
+}
+
+#transcriptions th {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    text-align: left;
+    background-color: lightskyblue;
+    color: black;
+}

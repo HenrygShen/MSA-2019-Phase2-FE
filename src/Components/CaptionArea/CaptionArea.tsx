@@ -60,14 +60,16 @@ export default class CaptionArea extends React.Component<IProps, IState>{
                 return a.videoTitle.localeCompare(b.videoTitle);
             }
         })
+        let i = 0;
         this.state.result.forEach((video: any) => {
             video.transcription.forEach((caption: any) => {
                 toRet.push(
-                    <tr onClick={() => this.handleTableClick(video.webUrl,caption.startTime)}>
+                    <tr key={i} onClick={() => this.handleTableClick(video.webUrl,caption.startTime)}>
                         <td>{caption.startTime}</td>
                         <td>{caption.phrase}</td>
                         <td>{video.videoTitle}</td>
                     </tr>)
+                i++;
             })
         });
         if (toRet.length === 0) {
@@ -108,18 +110,20 @@ export default class CaptionArea extends React.Component<IProps, IState>{
                         <img src={customButton} className="custom-button" onClick={() => this.search()}/>
                     </div>
                 </div>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>Time</th>
-                            <th>Caption</th>
-                            <th>Video</th>
-                        </tr>
-                    </tbody>
-                    <tbody>
-                        {this.state.body}
-                    </tbody>
-                </table>
+                <div className="transcription-table">
+                    <table id="transcriptions">
+                        <tbody>
+                            <tr>
+                                <th>Time</th>
+                                <th>Caption</th>
+                                <th>Video</th>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            {this.state.body}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             
         )

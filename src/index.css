@@ -16,7 +16,6 @@ h1 {
   font-size: 28px;
   font-weight: 600;
   color: #6D6D6D;
-  float: left;
 }
 
 .red-heading {
@@ -69,4 +68,22 @@ h1 {
 
 .player {
   background-color: black;
+}
+
+nav{
+  display:flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 5vh;
+  background-color: lightblue;
+}
+
+li {
+    padding: 10%;
+    margin-right: 10px;
+}
+
+.test {
+    display: flex;
+    justify-content: space-between;
 }

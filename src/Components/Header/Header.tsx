@@ -1,7 +1,7 @@
-// import { IconButton } from '@material-ui/core';
 import * as React from 'react';
 import customButton from "./searchicon.png";
 import "./Header.css";
+import { Link } from 'react-router-dom';
 
 interface IProps{
     addVideo:any,
@@ -31,11 +31,22 @@ export default class Header extends React.Component<IProps,IState> {
 
     public render() {
         return (
-            <div className = "header-container">
+            <div className="header-container">
                 <div>
                     <h1><span className="red-heading">Like</span>&amp;Scribr</h1>
                 </div>
-                <div className = "right-header">
+
+                <div className="navigation">
+                    <Link className="nav-style" to="/Login">
+                        <div>Login</div>
+                    </Link>
+                    <Link className="nav-style" to="/">
+                        <div>Home</div>
+                    </Link>
+                </div>
+                
+                
+                <div className="right-header">
                     <input
                     id= "Search-Bar"
                     className="search-bar"
@@ -46,8 +57,7 @@ export default class Header extends React.Component<IProps,IState> {
                     />
                     <img src={customButton} className="custom-button" onClick={this.addVideo}/>
                 </div>
-            </div>
-
+        </div>
         )
     }
 }
