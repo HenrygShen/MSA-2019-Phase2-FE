@@ -27,27 +27,17 @@ class App extends React.Component<{}, IState>{
         }
     }
 
-    public addVideo = (url: string) => {
-        const body = {"url": url}
-        fetch("https://localhost:44307/api/Videos", {
-            body: JSON.stringify(body),
-            headers: {
-            Accept: "text/plain",
-            "Content-Type": "application/json"
-        },
-        method: "POST"
-        }).then(() => {
-            this.state.updateVideoList();
-        }).then(() => {this.state.hubConnection.invoke("UpdateVideos")});
+    public videoList = (callback: any) => {
+        this.setState({ updateVideoList: callback });
     }
 
     public render() {
         return (
             <Router>
                 <div>
-                    <Header addVideo={this.addVideo} />
+                    <Header/>
                     <Switch>
-                        <Route path="/" exact={true} component={Home} />
+                        <Route path="/" exact={true} component={Home} videoList={this.videoList}/>
                         <Route path="/login" component={Login} />
                     </Switch>
                 </div>

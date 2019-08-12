@@ -3,14 +3,16 @@ import Star from '@material-ui/icons/Star'
 import StarBorder from '@material-ui/icons/StarBorder'
 import * as React from 'react'
 
+import customButton from "./searchicon.png";
+
 interface IState{
-    hubConnection: any,
-    videoList: any
+    videoList: any,
+    input: any
 } 
 
 interface IProps{
-    mount:any
-    play:any
+    play:any,
+    hubConnection:any
 }
 
 export default class VideoList extends React.Component<IProps,IState>{
@@ -18,7 +20,7 @@ export default class VideoList extends React.Component<IProps,IState>{
     public constructor(props:any){
         super(props);
         this.state = {
-            hubConnection: new this.signalR.HubConnectionBuilder().withUrl("https://localhost:44307/hub").build(),
+            input: "",
             videoList: []
         }
         this.updateList();
@@ -29,7 +31,7 @@ export default class VideoList extends React.Component<IProps,IState>{
             method:'DELETE'
         }).then(() => {
             this.updateList()
-        }).then(() => {this.state.hubConnection.invoke("UpdateVideos")});
+        }).then(() => {this.props.hubConnection.invoke("UpdateVideos")});
     }
 
     public playVideo = (videoUrl:string) => {
@@ -60,6 +62,26 @@ export default class VideoList extends React.Component<IProps,IState>{
         })
     }
 
+    public addVideo = () => {
+        const body = {"url": this.state.input}
+        fetch("https://localhost:44307/api/Videos", {
+            body: JSON.stringify(body),
+            headers: {
+            Accept: "text/plain",
+            "Content-Type": "application/json"
+        },
+        method: "POST"
+        }).then(() => {
+            this.updateList();
+        }).then(() => {this.props.hubConnection.invoke("UpdateVideos")});
+    }
+
+    public keyPress = (e:any) => {
+        if(e.keyCode === 13){
+            this.addVideo()
+        }
+    }
+
     public handleLike = (video:any) => {
         const toSend = [{
             "from":"",
@@ -76,26 +98,32 @@ export default class VideoList extends React.Component<IProps,IState>{
             method: "PATCH"
           }).then(() => {
               this.updateList();
-          }).then(() => {this.state.hubConnection.invoke("UpdateVideos")});
+          }).then(() => {this.props.hubConnection.invoke("UpdateVideos")});
     }
     
     public componentDidMount = () => {
-        this.props.mount(this.updateList)
         this.updateList()
 
-        this.state.hubConnection.on("UpdateVideoList", ()  => {
+        this.props.hubConnection.on("UpdateVideoList", ()  => {
             this.updateList();
         });
-    
-        this.state.hubConnection.start().then(() => this.state.hubConnection.invoke("BroadcastMessage"));
     }
-
-
 
     public render() {
         return (
             <div className="video-list">
                 <h1 className="play-heading"><span className="red-heading">play</span>video</h1>
+                <div className="right-header">
+                    <input
+                    id= "Search-Bar"
+                    className="search-bar"
+                    placeholder="Add Video Url"
+                    onChange = { (event: any ) => this.setState({input:event.target.value})}
+                    onKeyDown={this.keyPress}
+                    value = {this.state.input}
+                    />
+                    <img src={customButton} className="custom-button" onClick={this.addVideo}/>
+                </div>
                 <table className="table">
                     <tbody>
                         {this.state.videoList}

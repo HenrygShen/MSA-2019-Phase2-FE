@@ -4,17 +4,18 @@ import ReactPlayer from 'react-player';
 import CaptionArea from '../CaptionArea/CaptionArea';
 import VideoList from '../VideoList/VideoList';
 
-
 interface IState {
     hubConnection: any,
-    updateVideoList: any,
     player: any,
     playingURL: string,
     user: any,
     videoList: object
 }
+interface IProps {
+    videoList: any
+}
 
-export default class Home extends React.Component<{}, IState>{
+export default class Home extends React.Component<IProps, IState>{
     public signalR = require("@aspnet/signalr");
     public constructor(props: any) {
         super(props);
@@ -22,7 +23,6 @@ export default class Home extends React.Component<{}, IState>{
             hubConnection: new this.signalR.HubConnectionBuilder().withUrl("https://localhost:44307/hub").build(),
             player: null,
             playingURL: "",
-            updateVideoList: null,
             user: {},
             videoList: [],
         }
@@ -37,10 +37,6 @@ export default class Home extends React.Component<{}, IState>{
             console.log('A new user has connected to the hub.');
         });
 
-        this.state.hubConnection.on("UpdateVideoList", ()  => {
-            this.state.updateVideoList();
-        });
-
         this.state.hubConnection.start().then(() => this.state.hubConnection.invoke("BroadcastMessage"));
     }
 
@@ -50,30 +46,12 @@ export default class Home extends React.Component<{}, IState>{
         })
     }
 
-    public addVideo = (url: string) => {
-        const body = {"url": url}
-        fetch("https://localhost:44307/api/Videos", {
-            body: JSON.stringify(body),
-            headers: {
-            Accept: "text/plain",
-            "Content-Type": "application/json"
-        },
-        method: "POST"
-        }).then(() => {
-            this.state.updateVideoList();
-        }).then(() => {this.state.hubConnection.invoke("UpdateVideos")});
-    }
-
     public updateURL = (url: string) => {
         if(this.state.playingURL === url){
             this.setState({playingURL : ""},() => this.setState({playingURL: url}))
         }else{
             this.setState({playingURL:url})
         }
-    }
-
-    public listMounted = (callbacks: any) => {
-        this.setState({ updateVideoList: callbacks })
     }
 
     public render() {
@@ -100,7 +78,7 @@ export default class Home extends React.Component<{}, IState>{
                         />
                     </div>
                     <div className="col-5">
-                        <VideoList play={this.updateURL} mount={this.listMounted} />
+                        <VideoList play={this.updateURL} hubConnection={this.state.hubConnection} />
                     </div>
                 </div>
                 <CaptionArea currentVideo={this.state.playingURL} play={this.updateURL} />

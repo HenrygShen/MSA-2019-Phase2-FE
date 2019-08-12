@@ -34,7 +34,6 @@ export default class SignupForm extends React.Component<{}, IState>{
                 const error = (data && data.message) || response.statusText;
                 return Promise.reject(error);
             }
-            console.log("signup successful");
             return data;
         });
     }
@@ -69,7 +68,10 @@ export default class SignupForm extends React.Component<{}, IState>{
             this.setState({ error: "", loading: false });
             console.log("signup completed");
             return user;
-        })
+        }).catch(err => {
+            console.log(err);
+            this.setState({ error: err, loading: false})
+        }) 
     }
 
     public keyPress = (e:any) => {

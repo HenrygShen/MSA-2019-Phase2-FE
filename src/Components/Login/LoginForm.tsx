@@ -96,6 +96,10 @@ export default class Login extends React.Component<{}, IState>{
             this.setState({ error: "", loading: false, loginSuccessful: true });
             return user;
         })
+        .catch(err => {
+            console.log(err)
+            this.setState({ error: err, loading: false})
+        })
     }
 
     public logout() {
