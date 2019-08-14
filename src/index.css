@@ -48,9 +48,6 @@ h1 {
   background-color: #CCDEE2;
 }
 
-.video-list > .table {
-  cursor: pointer;
-}
 
 .video-list-close {
   width: 60px;
@@ -86,4 +83,8 @@ li {
 .test {
     display: flex;
     justify-content: space-between;
+}
+
+.search-bar {
+    margin-right: 10px;
 }

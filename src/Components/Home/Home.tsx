@@ -3,6 +3,7 @@ import * as React from 'react';
 import ReactPlayer from 'react-player';
 import CaptionArea from '../CaptionArea/CaptionArea';
 import VideoList from '../VideoList/VideoList';
+import Header from '../Header/Header';
 
 interface IState {
     hubConnection: any,
@@ -11,8 +12,9 @@ interface IState {
     user: any,
     videoList: object
 }
+
 interface IProps {
-    videoList: any
+    logout: any
 }
 
 export default class Home extends React.Component<IProps, IState>{
@@ -56,7 +58,9 @@ export default class Home extends React.Component<IProps, IState>{
 
     public render() {
         return (
-            <div className="container">
+            <div>
+                <Header logout={this.props.logout}/>
+                <div className="container">
                 <h1>Hi {this.state.user.username}!</h1>
                 <div className="row">
                     <div className="col-7">
@@ -78,11 +82,13 @@ export default class Home extends React.Component<IProps, IState>{
                         />
                     </div>
                     <div className="col-5">
-                        <VideoList play={this.updateURL} hubConnection={this.state.hubConnection} />
+                        <VideoList play={this.updateURL} />
                     </div>
                 </div>
                 <CaptionArea currentVideo={this.state.playingURL} play={this.updateURL} />
             </div>
+            </div>
+
         )
     }
 }

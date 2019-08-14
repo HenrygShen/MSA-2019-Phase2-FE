@@ -1,12 +1,15 @@
 import * as React from 'react';
 import "./Header.css";
-import { Link } from 'react-router-dom';
 
-interface IState{
+interface IState {
     input:string
 }
 
-export default class Header extends React.Component<{},IState> {
+interface IProps {
+    logout:any
+}
+
+export default class Header extends React.Component<IProps,IState> {
     public constructor(props:any){
         super(props);
         this.state = {
@@ -17,19 +20,9 @@ export default class Header extends React.Component<{},IState> {
     public render() {
         return (
             <div className="header-container">
-                <div>
-                    <h1><span className="red-heading">Like</span>&amp;Scribr</h1>
-                </div>
-
-                <div className="navigation">
-                    <Link className="nav-style" to="/Login">
-                        <div>Login</div>
-                    </Link>
-                    <Link className="nav-style" to="/">
-                        <div>Home</div>
-                    </Link>
-                </div>
-        </div>
+                <h1><span className="red-heading">Like</span>&amp;Scribr</h1>
+                <button className="logout-button" onClick={this.props.logout}>Logout</button>
+            </div>
         )
     }
 }

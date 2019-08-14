@@ -5,19 +5,7 @@
     display: flex;
     background-color: lightblue;
     justify-content: space-between;
-}
-
-.custom-button {
-    width: 20px;
-    height: 20px;
-}
-
-.search-bar {
-    margin-right: 10px;
-}
-
-.right-header {
-    justify-self: end;
+    align-items: center;
 }
 
 .navigation {
@@ -28,5 +16,9 @@
 
 .nav-style {
     color: black;
-    
 }
+
+.logout-button {
+    border: none;
+    background-color: lightblue;
+  }

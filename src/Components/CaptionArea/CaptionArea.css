@@ -10,10 +10,6 @@
     height: 20px;
 }
 
-.search-bar {
-    margin-right: 10px;
-}
-
 .transcription-table {
     max-height: 40vh;
     overflow-y: auto;

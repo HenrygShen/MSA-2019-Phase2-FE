@@ -1,47 +1,49 @@
 import * as React from 'react';
 
-import Header from 'src/Components/Header/Header';
-
-import {BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+// import {BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from 'src/Components/Login/Login';
 import Home from 'src/Components/Home/Home';
 
 interface IState {
-    hubConnection: any,
-    updateVideoList: any,
-    player: any,
-    playingURL: string,
-    videoList: object
+    displayLogin: boolean 
 }
 
 class App extends React.Component<{}, IState>{
     public signalR = require("@aspnet/signalr");
     public constructor(props: any) {
         super(props);
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+
         this.state = {
-            hubConnection: new this.signalR.HubConnectionBuilder().withUrl("https://localhost:44307/hub").build(),
-            player: null,
-            playingURL: "",
-            updateVideoList: null,
-            videoList: [],
+            displayLogin:  this.isEmpty(user),
         }
     }
 
-    public videoList = (callback: any) => {
-        this.setState({ updateVideoList: callback });
+    public isEmpty = (obj:any) => {
+        for(const key in obj) {
+            if(obj.hasOwnProperty(key)){
+                return false;
+            }  
+        }
+        return true;
+    }
+
+    public login = (loginSuccessful: boolean) => {
+        if (loginSuccessful) {
+            this.setState({displayLogin: false}); 
+        }
+    }
+
+    public logout = () => {
+        localStorage.removeItem('user');
+        this.setState({displayLogin: true}); 
     }
 
     public render() {
         return (
-            <Router>
-                <div>
-                    <Header/>
-                    <Switch>
-                        <Route path="/" exact={true} component={Home} videoList={this.videoList}/>
-                        <Route path="/login" component={Login} />
-                    </Switch>
-                </div>
-            </Router>
+            <div>
+                {this.state.displayLogin ? <Login login={this.login}/>:<Home logout={this.logout}/>}   
+            </div>
         )
     }
 }

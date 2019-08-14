@@ -7,7 +7,11 @@ interface IState{
     signup: boolean
 }
 
-export default class Login extends React.Component<{}, IState>{
+interface IProps{
+    login: any
+}
+
+export default class Login extends React.Component<IProps, IState>{
     public constructor(props: any) {
         super(props);
         this.state = {
@@ -27,7 +31,7 @@ export default class Login extends React.Component<{}, IState>{
                 </div>
                 :
                 <div>
-                    <LoginForm />
+                    <LoginForm loginFunc={this.props.login}/>
                     <div>
                         Don't have an account? <button className="button-link" onClick={() => this.setState({signup: true})}>Sign up here</button>
                     </div>

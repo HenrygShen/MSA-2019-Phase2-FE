@@ -1,6 +1,6 @@
 import * as React from 'react';
 import "./Login.css"
-import {Redirect} from 'react-router-dom'
+// import {Redirect} from 'react-router-dom'
 
 interface IState{
     password: string,
@@ -12,7 +12,11 @@ interface IState{
     loginSuccessful:boolean
 }
 
-export default class Login extends React.Component<{}, IState>{
+interface IProps{
+    loginFunc: any
+}
+
+export default class Login extends React.Component<IProps, IState>{
     public constructor(props: any) {
         super(props);
         this.state = {
@@ -32,36 +36,16 @@ export default class Login extends React.Component<{}, IState>{
             if (!response.ok) {
                 if (response.status === 401) {
                     // auto logout if 401 response returned from api
-                    this.logout();
                     location.reload(true);
                 }
     
                 const error = (data && data.message) || response.statusText;
-                console.log("Asdasdasd");
                 return Promise.reject(error);
             }
     
             return data;
         });
     }
-
-    // public handleSubmit = (e:any) => {
-    //     e.preventDefault();
-
-    //     this.setState({ submitted: true });
-    //     const { username, password } = this.state;
-
-    //     // stop here if form is invalid
-    //     if (!(username && password)) {
-    //         return;
-    //     }
-
-    //     this.setState({ loading: true });
-    //     this.login()
-    //         .then(
-    //             error => this.setState({ error: "", loading: false, loginSuccessful: true })
-    //         );
-    // }
 
     public login = () =>{
         
@@ -102,11 +86,6 @@ export default class Login extends React.Component<{}, IState>{
         })
     }
 
-    public logout() {
-        // remove user from local storage to log user out
-        localStorage.removeItem('user');
-    }
-
     public keyPress = (e:any) => {
         if(e.keyCode === 13){
             this.login();
@@ -115,9 +94,7 @@ export default class Login extends React.Component<{}, IState>{
 
     public render() {
         const { error, loading, submitted, username, password, loginSuccessful } = this.state;
-        if (loginSuccessful === true) {
-            return <Redirect to="/" />
-        }
+        this.props.loginFunc(loginSuccessful);
         return (
             <div className="login-box">
             <h2>Login</h2>
