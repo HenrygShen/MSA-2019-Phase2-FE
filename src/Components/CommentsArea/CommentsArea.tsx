@@ -8,8 +8,6 @@ interface IState {
     hubConnection: any,
     comments: any,
     newComment: string,
-    editedComment: string
-    editCommentId: number,
     body: any,
     submitted: boolean
 }
@@ -27,8 +25,6 @@ export default class CommentsArea extends React.Component<IProps, IState>{
         this.state = { 
             body: [],
             comments: [],
-            editCommentId: -1,
-            editedComment: '',
             hubConnection: new this.signalR.HubConnectionBuilder().withUrl("https://localhost:44307/hub").build(),
             newComment: '',
             submitted: true
@@ -107,24 +103,6 @@ export default class CommentsArea extends React.Component<IProps, IState>{
         })
     }
 
-    public editComment = (commentId: number) => {
-        const body = {"comment": this.state.newComment,
-                    "commentId": commentId
-                    }
-        fetch('https://localhost:44307/api/Comments/UpdateComment',{
-            body: JSON.stringify(body),
-            headers: {
-            Accept: "text/plain",
-            "Content-Type": "application/json"
-        },
-            method:'PUT'
-        }).then((ret:any) => {
-            return ret.json();
-        }).then(() => {
-            this.updateList();
-        })
-    }
-
     public deleteComment = (commentId: number) => {
         fetch('https://localhost:44307/api/Comments/'+commentId,{
             method:'DELETE'
@@ -145,22 +123,16 @@ export default class CommentsArea extends React.Component<IProps, IState>{
             result.forEach((comment:any) => {
                 const row = (<tr key = {`${Math.random()} ${Math.random()}`}>
                     <td className="align-middle">{comment.username}</td>
-                    <td className="align-middle comment-overflow">{(this.state.editCommentId !== comment.Id) ? 
-                                                <input
-                                                    value={this.state.editedComment}
-                                                    onChange={(event: any) => this.setState({ editedComment: event.target.value })}
-                                                />
-                                                :comment.comment}
+                    <td className="align-middle comment-overflow">{ comment.comment }
                     </td>
                     <td className="align-middle">{comment.timeStamp}</td>
                     <td className="align-middle">{this.checkLiked(comment.likesList) ? <img src={liked} className="custom-button" onClick={() => this.handleLike(comment.commentId, false)}/>
                                                 :<img src={unliked} className="custom-button" onClick={() => this.handleLike(comment.commentId, true)}/>}
                     </td>
                     <td className="align-middle">{comment.likes}</td>
-                    <td className="align-middle video-list-close">{(comment.username === this.props.user) && <button onClick={() => this.setState({editCommentId: comment.commentId})}>Edit</button>}</td>
                     <td className="align-middle video-list-close">{(comment.username === this.props.user) && <button onClick={() => this.deleteComment(comment.commentId)}>Delete</button>}</td>
                 </tr>)
-                output.push(row);
+                output.unshift(row);
             });
             this.setState({comments:output});
         })
@@ -172,12 +144,15 @@ export default class CommentsArea extends React.Component<IProps, IState>{
                 <div className="comments-header">
                     <h1><span className="red-heading">Comments</span></h1>
                 </div>
-                <input
-                    className="comment-input"
-                    placeholder="Enter a comment here"
-                    onChange={(event: any) => this.setState({ newComment: event.target.value })}
-                />
-                <button onClick={this.addComment}>Submit</button>
+                <div className="comment-input-container">
+                    <input
+                        className="comment-input"
+                        placeholder="Enter a comment here"
+                        onChange={(event: any) => this.setState({ newComment: event.target.value })}
+                    />
+                    <button onClick={this.addComment}>Submit</button>
+                </div>
+
                 <table className="table">
                     <tbody>
                     {this.state.comments}
