@@ -6,6 +6,7 @@ interface IState{
     username: string
     submitted: boolean,
     signup: boolean,
+    success: string,
     loading: boolean,
     error: string,
 }
@@ -19,6 +20,7 @@ export default class SignupForm extends React.Component<{}, IState>{
             password: "",
             signup: false,
             submitted: false,
+            success: "",
             username: ""
         }
     }
@@ -58,19 +60,11 @@ export default class SignupForm extends React.Component<{}, IState>{
         },
         method: "POST"
         }).then(this.handleResponse)
-        .then((user: any) => {
-            // login successful if there's a user in the response
-            if (user) {
-                // store user details and basic auth credentials in local storage 
-                // to keep user logged in between page refreshes
-                user.authdata = window.btoa(this.state.username + ':' + this.state.password);
-            }
-            this.setState({ error: "", loading: false });
-            console.log("signup completed");
-            return user;
+        .then((message: any) => {
+            this.setState({ error: "", success: message.message, loading: false });
         }).catch(err => {
             console.log(err);
-            this.setState({ error: err, loading: false})
+            this.setState({ error: err, success: "", loading: false})
         }) 
     }
 
@@ -81,49 +75,54 @@ export default class SignupForm extends React.Component<{}, IState>{
     }
 
     public render() {
-        const { error, loading, submitted, username, password } = this.state;
+        const { error, success, loading, submitted, username, password } = this.state;
         return (
-            <div className="login-box">
-            <h2>Signup</h2>
             <div>
-                <div>
-                    <label htmlFor="username">Username</label>
-                    <input 
-                        type="text" 
-                        className="form-control" 
-                        name="username" 
-                        value={username}
-                        onChange={(event: any) => this.setState({ username: event.target.value })}
-                        onKeyDown={this.keyPress}
-                    />
-                    {submitted && !username &&
-                        <div>Username is required</div>
-                    }
+                <h2>Signup</h2>
+                <div className="login-box">
+                    <div className="login-input-container">
+                        <div className="inputs">
+                            <label htmlFor="username">Username</label>
+                            <input 
+                                type="text" 
+                                className="input-form"
+                                name="username" 
+                                value={username}
+                                onChange={(event: any) => this.setState({ username: event.target.value })} 
+                                onKeyDown={this.keyPress}
+                            />
+                            {submitted && !username &&
+                                <div>Username is required</div>
+                            }
+                        </div>        
+                        <div className="inputs">
+                            <label htmlFor="password">Password</label>
+                            <input 
+                                type="password" 
+                                className="input-form"
+                                name="password" 
+                                value={password} 
+                                onChange={(event: any) => this.setState({ password: event.target.value })}
+                                onKeyDown={this.keyPress}
+                            />
+                            {submitted && !password &&
+                                <div>Password is required</div>
+                            }
+                        </div>
+                            
+
+                        <button className="btn btn-primary" disabled={loading} onClick={this.signup}>Signup</button>
+                            {loading &&
+                                <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                            }
+                        {success &&
+                            <div className={'alert alert-success'}>{success}</div>
+                        }
+                        {error &&
+                            <div className={'alert alert-danger'}>{error}</div>
+                        }
+                    </div>
                 </div>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input 
-                        type="password" 
-                        className="form-control" 
-                        name="password" 
-                        value={password} 
-                        onChange={(event: any) => this.setState({ password: event.target.value })} 
-                        onKeyDown={this.keyPress}
-                    />
-                    {submitted && !password &&
-                        <div>Password is required</div>
-                    }
-                </div>
-                <div className="form-group">
-                    <button className="btn btn-primary" disabled={loading} onClick={this.signup}>Sign up</button>
-                    {loading &&
-                        <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                    }
-                </div>
-                {error &&
-                    <div className={'alert alert-danger'}>{error}</div>
-                }
-            </div>
             </div>
         )
     }

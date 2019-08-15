@@ -96,7 +96,7 @@ export default class CaptionArea extends React.Component<IProps, IState>{
             <div>
                 <div className= "caption-header">
                     <div>
-                        <h1><span className="red-heading">Search</span>caption</h1>
+                        <h1><span className="red-heading">Search By Caption</span></h1>
                     </div>
                     <div className="right-header">
                         <input

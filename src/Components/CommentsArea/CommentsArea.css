@@ -16,12 +16,10 @@
 }
 
 .comment-overflow {
-    max-width: 50%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    word-wrap: break-word;
 }
 
-[contentEditable=true]:empty:not(:focus):before{
-    content:attr(data-text)
+.something {
+    max-width: 500px;
+    width: 500px;
 }

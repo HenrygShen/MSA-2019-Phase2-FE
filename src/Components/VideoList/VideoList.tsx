@@ -117,7 +117,7 @@ export default class VideoList extends React.Component<IProps,IState>{
         return (
             <div className="video-list">
                 <div className="video-list-header"> 
-                    <h1 className="play-heading"><span className="red-heading">Play</span>video</h1>
+                    <h1 className="play-heading"><span className="red-heading">Play</span> Video</h1>
                     <div className="right-header">
                         <input
                         id= "Search-Bar"

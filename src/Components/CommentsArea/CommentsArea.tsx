@@ -122,15 +122,14 @@ export default class CommentsArea extends React.Component<IProps, IState>{
             const output:any[] = []
             result.forEach((comment:any) => {
                 const row = (<tr key = {`${Math.random()} ${Math.random()}`}>
-                    <td className="align-middle">{comment.username}</td>
-                    <td className="align-middle comment-overflow">{ comment.comment }
-                    </td>
-                    <td className="align-middle">{comment.timeStamp}</td>
-                    <td className="align-middle">{this.checkLiked(comment.likesList) ? <img src={liked} className="custom-button" onClick={() => this.handleLike(comment.commentId, false)}/>
+                    <td className="">{comment.username}</td>
+                    <td className=" something"><span className="comment-overflow">{ comment.comment }</span></td>
+                    <td className="">{comment.timeStamp}</td>
+                    <td className="">{this.checkLiked(comment.likesList) ? <img src={liked} className="custom-button" onClick={() => this.handleLike(comment.commentId, false)}/>
                                                 :<img src={unliked} className="custom-button" onClick={() => this.handleLike(comment.commentId, true)}/>}
                     </td>
-                    <td className="align-middle">{comment.likes}</td>
-                    <td className="align-middle video-list-close">{(comment.username === this.props.user) && <button onClick={() => this.deleteComment(comment.commentId)}>Delete</button>}</td>
+                    <td className="">{comment.likes}</td>
+                    <td className=" video-list-close">{(comment.username === this.props.user) && <button onClick={() => this.deleteComment(comment.commentId)}>Delete</button>}</td>
                 </tr>)
                 output.unshift(row);
             });

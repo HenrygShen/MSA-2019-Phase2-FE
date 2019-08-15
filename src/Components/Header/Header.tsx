@@ -20,7 +20,7 @@ export default class Header extends React.Component<IProps,IState> {
     public render() {
         return (
             <div className="header-container">
-                <h1><span className="red-heading">Like</span>&amp;Scribr</h1>
+                <h1><span className="red-heading">Video</span>Lounge</h1>
                 <button className="logout-button" onClick={this.props.logout}>Logout</button>
             </div>
         )
