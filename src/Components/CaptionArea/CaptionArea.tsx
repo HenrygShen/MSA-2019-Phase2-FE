@@ -41,9 +41,9 @@ export default class CaptionArea extends React.Component<IProps, IState>{
         }
     }
 
-    public handleTableClick = (videoUrl:any, timedURL: string) => {
+    public handleTableClick = (videoUrl:any, timedURL: string, videoId: number) => {
         window.scrollTo(0,0);
-        this.props.play(videoUrl + "&t=" + timedURL + "s")
+        this.props.play(videoUrl + "&t=" + timedURL + "s", videoId.toString());
     }
 
     public makeTableBody = () => {
@@ -64,7 +64,7 @@ export default class CaptionArea extends React.Component<IProps, IState>{
         this.state.result.forEach((video: any) => {
             video.transcription.forEach((caption: any) => {
                 toRet.push(
-                    <tr key={i} onClick={() => this.handleTableClick(video.webUrl,caption.startTime)}>
+                    <tr key={i} onClick={() => this.handleTableClick(video.webUrl,caption.startTime, video.VideoId)}>
                         <td>{caption.startTime}</td>
                         <td>{caption.phrase}</td>
                         <td>{video.videoTitle}</td>
@@ -96,7 +96,7 @@ export default class CaptionArea extends React.Component<IProps, IState>{
             <div>
                 <div className= "caption-header">
                     <div>
-                        <h1><span className="red-heading">search</span>caption</h1>
+                        <h1><span className="red-heading">Search</span>caption</h1>
                     </div>
                     <div className="right-header">
                         <input

@@ -75,9 +75,9 @@ export default class Login extends React.Component<IProps, IState>{
                 // store user details and basic auth credentials in local storage 
                 // to keep user logged in between page refreshes
                 user.authdata = window.btoa(this.state.username + ':' + this.state.password);
-                localStorage.setItem('user', JSON.stringify(user));
             }
             this.setState({ error: "", loading: false, loginSuccessful: true });
+            this.props.loginFunc(user.username, user.userId);
             return user;
         })
         .catch(err => {
@@ -93,8 +93,7 @@ export default class Login extends React.Component<IProps, IState>{
     }
 
     public render() {
-        const { error, loading, submitted, username, password, loginSuccessful } = this.state;
-        this.props.loginFunc(loginSuccessful);
+        const { error, loading, submitted, username, password } = this.state;
         return (
             <div className="login-box">
             <h2>Login</h2>

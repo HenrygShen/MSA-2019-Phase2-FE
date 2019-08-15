@@ -5,17 +5,17 @@ import Login from 'src/Components/Login/Login';
 import Home from 'src/Components/Home/Home';
 
 interface IState {
-    displayLogin: boolean 
+    username: string,
+    userId: number
 }
 
 class App extends React.Component<{}, IState>{
     public signalR = require("@aspnet/signalr");
     public constructor(props: any) {
         super(props);
-        const user = JSON.parse(localStorage.getItem('user') || '{}');
-
         this.state = {
-            displayLogin:  this.isEmpty(user),
+            userId: -1,
+            username: ''
         }
     }
 
@@ -28,21 +28,18 @@ class App extends React.Component<{}, IState>{
         return true;
     }
 
-    public login = (loginSuccessful: boolean) => {
-        if (loginSuccessful) {
-            this.setState({displayLogin: false}); 
-        }
+    public login = (name: string, id: number) => {
+        this.setState({username: name, userId: id});
     }
 
     public logout = () => {
-        localStorage.removeItem('user');
-        this.setState({displayLogin: true}); 
+        this.setState({username: '', userId: -1});
     }
 
     public render() {
         return (
             <div>
-                {this.state.displayLogin ? <Login login={this.login}/>:<Home logout={this.logout}/>}   
+                {(this.state.username === '') ? <Login login={this.login}/>:<Home logout={this.logout} user={this.state.username} userId={this.state.userId}/>}   
             </div>
         )
     }

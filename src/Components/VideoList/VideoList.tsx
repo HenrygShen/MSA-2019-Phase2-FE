@@ -36,8 +36,8 @@ export default class VideoList extends React.Component<IProps,IState>{
         }).then(() => {this.state.hubConnection.invoke("UpdateVideos")});
     }
 
-    public playVideo = (videoUrl:string) => {
-        this.props.play(videoUrl)
+    public playVideo = (videoUrl:string, videoId: number) => {
+        this.props.play(videoUrl, videoId)
     }
 
     public updateList = () => {
@@ -50,8 +50,8 @@ export default class VideoList extends React.Component<IProps,IState>{
             result.forEach((video:any) => {
                 const row = (<tr key = {`${Math.random()} ${Math.random()}`}>
                     <td className="align-middle" onClick={() => this.handleLike(video)}>{video.isFavourite === true?<Star color="primary"/>:<StarBorder/>}</td>
-                    <td className="align-middle" onClick={() => this.playVideo(video.webUrl)}><img src={video.thumbnailUrl} width="100px" alt="Thumbnail"/></td>
-                    <td className="align-middle" onClick={() => this.playVideo(video.webUrl)}><b>{video.videoTitle}</b></td>
+                    <td className="align-middle" onClick={() => this.playVideo(video.webUrl, video.videoId)}><img src={video.thumbnailUrl} width="100px" alt="Thumbnail"/></td>
+                    <td className="align-middle" onClick={() => this.playVideo(video.webUrl, video.videoId)}><b>{video.videoTitle}</b></td>
                     <td className="align-middle video-list-close"><button onClick={() => this.deleteVideo(video.videoId)}><Close/></button></td>
                 </tr>)
                 if(video.isFavourite){
@@ -117,7 +117,7 @@ export default class VideoList extends React.Component<IProps,IState>{
         return (
             <div className="video-list">
                 <div className="video-list-header"> 
-                    <h1 className="play-heading"><span className="red-heading">play</span>video</h1>
+                    <h1 className="play-heading"><span className="red-heading">Play</span>video</h1>
                     <div className="right-header">
                         <input
                         id= "Search-Bar"
