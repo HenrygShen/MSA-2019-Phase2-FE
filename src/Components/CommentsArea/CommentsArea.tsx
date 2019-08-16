@@ -119,9 +119,8 @@ export default class CommentsArea extends React.Component<IProps, IState>{
         }).then((ret:any) => {
             return ret.json();
         }).then((result:any) => {
-            const output:any[] = []
-            result.forEach((comment:any) => {
-                const row = (<tr key = {`${Math.random()} ${Math.random()}`}>
+            const output = result.map((comment: any, index: number) => {
+                return (<tr key = {`${Math.random()} ${Math.random()}`}>
                     <td className="">{comment.username}</td>
                     <td className=" something"><span className="comment-overflow">{ comment.comment }</span></td>
                     <td className="">{comment.timeStamp}</td>
@@ -131,8 +130,9 @@ export default class CommentsArea extends React.Component<IProps, IState>{
                     <td className="">{comment.likes}</td>
                     <td className=" video-list-close">{(comment.username === this.props.user) && <button onClick={() => this.deleteComment(comment.commentId)}>Delete</button>}</td>
                 </tr>)
-                output.unshift(row);
-            });
+            })
+            output.reverse();
+            
             this.setState({comments:output});
         })
     }

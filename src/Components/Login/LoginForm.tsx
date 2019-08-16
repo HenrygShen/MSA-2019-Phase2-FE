@@ -60,28 +60,29 @@ export default class Login extends React.Component<IProps, IState>{
 
         const body = {"Password": this.state.password,
                     "Username": this.state.username}
-        fetch("https://localhost:44307/api/users/Authenticate", {
+        return fetch("https://localhost:44307/api/users/Authenticate", {
             body: JSON.stringify(body),
             headers: {
+            Accept: "text/plain",
             "Content-Type": "application/json"
         },
         method: "POST"
         }).then(res => res.json())
         .then((res: any) => {
             // login successful if there's a user in the response
-            if (res) {
+            if (res.message === "Username or password is incorrect") {
+                this.setState({ error: res.message, loading: false});
+                return;
+            }
+            else {
                 this.setState({ error: "", loading: false, loginSuccessful: true });
                 this.props.loginFunc(res.username, res.userId);
                 return;
             }
-            this.setState({ error: "", loading: false, loginSuccessful: false });
-            return;
         })
         .catch(err => {
-            console.log("err");
-            alert(err);
-            if (err === "Username or password is incorrect") {
-                this.setState({ error: err, loading: false});
+            if (err.message === "Username or password is incorrect") {
+                this.setState({ error: err.message, loading: false});
             }
             this.setState({ error: "Something went wrong", loading: false});
         })
