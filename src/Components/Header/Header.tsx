@@ -6,7 +6,8 @@ interface IState {
 }
 
 interface IProps {
-    logout:any
+    logout:any,
+    styles: any
 }
 
 export default class Header extends React.Component<IProps,IState> {
@@ -18,10 +19,11 @@ export default class Header extends React.Component<IProps,IState> {
     }
 
     public render() {
+        const { styles } = this.props;
         return (
-            <div className="header-container">
-                <h1><span className="red-heading">Video</span>Lounge</h1>
-                <button className="logout-button" onClick={this.props.logout}>Logout</button>
+            <div className="header-container" style = {{backgroundColor: styles.backgroundColor2 }}>
+                <h1 style={{color: styles.color}}><span className="red-heading">Video</span>Lounge</h1>
+                <button style={{color: styles.color}} className="logout-button" onClick={this.props.logout}>Logout</button>
             </div>
         )
     }

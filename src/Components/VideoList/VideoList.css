@@ -11,8 +11,11 @@
     margin-right: 10px;
 }
 
+.video-list h1 {
+    font-size: 1.2em;
+}
+
+
 .video-list > .table {
     cursor: pointer;
 }
-
-  

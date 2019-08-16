@@ -5,7 +5,25 @@ import Home from 'src/Components/Home/Home';
 
 interface IState {
     username: string,
-    userId: number
+    userId: number,
+    theme: string
+}
+
+const styles = {
+    dark: {
+        backgroundColor: '#333333',
+        border: 'white',
+        color: 'white',
+        backgroundColor2: '#444444',
+        buttonTextColor: "#ADDE86"
+    },
+    light: {
+        backgroundColor: '#eeeeee',
+        border: '#111',
+        color: '#111',
+        backgroundColor2: '#ddd',
+        buttonTextColor: 'black'
+    }
 }
 
 class App extends React.Component<{}, IState>{
@@ -13,6 +31,7 @@ class App extends React.Component<{}, IState>{
     public constructor(props: any) {
         super(props);
         this.state = {
+            theme: 'dark',
             userId: -1,
             username: ''
         }
@@ -38,7 +57,18 @@ class App extends React.Component<{}, IState>{
     public render() {
         return (
             <div>
-                {(this.state.username === '') ? <Login login={this.login}/>:<Home logout={this.logout} user={this.state.username} userId={this.state.userId}/>}   
+                {(this.state.username === '') ? 
+                <Login 
+                    styles = {styles[this.state.theme]} 
+                    login={this.login}
+                />
+                :
+                <Home 
+                    styles = {styles[this.state.theme]} 
+                    logout={this.logout} 
+                    user={this.state.username} 
+                    userId={this.state.userId}/>
+                }   
             </div>
         )
     }

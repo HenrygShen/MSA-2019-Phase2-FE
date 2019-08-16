@@ -42,7 +42,7 @@ export default class SignupForm extends React.Component<{}, IState>{
 
 
     public signup = () =>{
-        this.setState({ submitted: true });
+        this.setState({ submitted: true , loading: true });
         const { username, password } = this.state;
 
         // stop here if form is invalid

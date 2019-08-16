@@ -13,7 +13,8 @@ interface IState{
 } 
 
 interface IProps{
-    play:any
+    play:any,
+    styles: any
 }
 
 export default class VideoList extends React.Component<IProps,IState>{
@@ -51,8 +52,8 @@ export default class VideoList extends React.Component<IProps,IState>{
                 const row = (<tr key = {`${Math.random()} ${Math.random()}`}>
                     <td className="align-middle" onClick={() => this.handleLike(video)}>{video.isFavourite === true?<Star color="primary"/>:<StarBorder/>}</td>
                     <td className="align-middle" onClick={() => this.playVideo(video.webUrl, video.videoId)}><img src={video.thumbnailUrl} width="100px" alt="Thumbnail"/></td>
-                    <td className="align-middle" onClick={() => this.playVideo(video.webUrl, video.videoId)}><b>{video.videoTitle}</b></td>
-                    <td className="align-middle video-list-close"><button onClick={() => this.deleteVideo(video.videoId)}><Close/></button></td>
+                    <td className="align-middle" onClick={() => this.playVideo(video.webUrl, video.videoId)}>{video.videoTitle}</td>
+                    <td className=" align-middle video-list-close"><button style = {{backgroundColor: this.props.styles.backgroundColor2, color: this.props.styles.color}} onClick={() => this.deleteVideo(video.videoId)}><Close /></button></td>
                 </tr>)
                 if(video.isFavourite){
                     output.unshift(row);
@@ -65,7 +66,19 @@ export default class VideoList extends React.Component<IProps,IState>{
     }
 
     public addVideo = () => {
-        const body = {"url": this.state.input}
+        // Remove part of url that specifies playlist or timestamp
+        const listPos = this.state.input.indexOf("&list=");
+        const timePos = this.state.input.indexOf("&t=");
+        let videoURL = '';
+        if (listPos !== -1){
+            videoURL = this.state.input.substring(0,listPos);
+        } else if (timePos !== -1) {
+            videoURL = this.state.input.substring(0,timePos);
+        } else {
+            videoURL = this.state.input;
+        }
+        console.log(videoURL);
+        const body = {"url": videoURL}
         fetch("https://localhost:44307/api/Videos", {
             body: JSON.stringify(body),
             headers: {
@@ -114,8 +127,9 @@ export default class VideoList extends React.Component<IProps,IState>{
     }
 
     public render() {
+        const {styles} = this.props;
         return (
-            <div className="video-list">
+            <div className="video-list" style = {{backgroundColor: styles.backgroundColor2, color: styles.color}}>
                 <div className="video-list-header"> 
                     <h1 className="play-heading"><span className="red-heading">Play</span> Video</h1>
                     <div className="right-header">
@@ -131,7 +145,7 @@ export default class VideoList extends React.Component<IProps,IState>{
                     </div>
                 </div>
                 
-                <table className="table">
+                <table className="table" style = {{color: styles.color}}>
                     <tbody>
                         {this.state.videoList}
                     </tbody>

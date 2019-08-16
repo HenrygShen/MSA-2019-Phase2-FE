@@ -16,6 +16,7 @@ interface IState {
 
 interface IProps {
     logout: any,
+    styles: any,
     user: string,
     userId: number,
 }
@@ -57,9 +58,10 @@ export default class Home extends React.Component<IProps, IState>{
     }
 
     public render() {
+        const { styles } = this.props;
         return (
-            <div>
-                <Header logout={this.props.logout}/>
+            <div style = {{backgroundColor: styles.backgroundColor, color: styles.color}}>
+                <Header logout={this.props.logout} styles = {styles}/>
                 <div className="container">
                 <h1>Hi {this.props.user}!</h1>
                 <div className="row">
@@ -82,10 +84,10 @@ export default class Home extends React.Component<IProps, IState>{
                         />
                     </div>
                     <div className="col-5">
-                        <VideoList play={this.updateURL} />
+                        <VideoList styles = {styles} play={this.updateURL} />
                     </div>
                 </div>
-                <CaptionArea currentVideo={this.state.playingURL} play={this.updateURL} />
+                <CaptionArea styles = {styles} currentVideo={this.state.playingURL} play={this.updateURL} />
                 { this.state.playingVideoId !== -1 &&
                     <CommentsArea videoId={this.state.playingVideoId} user={this.props.user} userId={this.props.userId}/>
                 }

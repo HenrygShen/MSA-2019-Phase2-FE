@@ -15,7 +15,7 @@
 }
 
 .login-box {
-    border: 1px solid black;
+    border: 1px solid;
     min-height: 50vh;
     min-width: 30vw;
     display:flex;
@@ -36,7 +36,6 @@
 .button-link { 
     background:none;
     border:none;
-    color: blue;
 }
 
 @media only screen and (max-width: 1200px) {

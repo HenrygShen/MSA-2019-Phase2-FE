@@ -20,5 +20,5 @@
 
 .logout-button {
     border: none;
-    background-color: lightblue;
-  }
+    background: transparent;
+}

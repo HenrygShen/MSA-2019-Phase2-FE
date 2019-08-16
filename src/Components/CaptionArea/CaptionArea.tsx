@@ -1,6 +1,6 @@
 import * as React from 'react';
-import customButton from "./searchicon.png";
 import "./CaptionArea.css";
+import Icon from '@material-ui/core/Icon'
 
 interface IState {
     input: string,
@@ -10,7 +10,8 @@ interface IState {
 
 interface IProps {
     currentVideo:any,
-    play: any
+    play: any,
+    styles: any
 }
 
 export default class CaptionArea extends React.Component<IProps, IState>{
@@ -36,6 +37,7 @@ export default class CaptionArea extends React.Component<IProps, IState>{
             }).then(response => {
                 return response.json()
             }).then(answer => {
+                console.log(answer);
                 this.setState({result:answer},()=>this.makeTableBody())
             })
         }
@@ -64,7 +66,7 @@ export default class CaptionArea extends React.Component<IProps, IState>{
         this.state.result.forEach((video: any) => {
             video.transcription.forEach((caption: any) => {
                 toRet.push(
-                    <tr key={i} onClick={() => this.handleTableClick(video.webUrl,caption.startTime, video.VideoId)}>
+                    <tr key={i} onClick={() => this.handleTableClick(video.webUrl, caption.startTime, video.videoId)}>
                         <td>{caption.startTime}</td>
                         <td>{caption.phrase}</td>
                         <td>{video.videoTitle}</td>
@@ -92,13 +94,14 @@ export default class CaptionArea extends React.Component<IProps, IState>{
         }
     }
     public render() {
+
         return (
             <div>
                 <div className= "caption-header">
                     <div>
                         <h1><span className="red-heading">Search By Caption</span></h1>
                     </div>
-                    <div className="right-header">
+                    <div className="right-header" style ={{display: 'flex', alignItems: 'center'}}>
                         <input
                             id="Search-Bar"
                             className="search-bar"
@@ -107,7 +110,9 @@ export default class CaptionArea extends React.Component<IProps, IState>{
                             value={this.state.input}
                             onKeyDown={this.keyPress}
                         />
-                        <img src={customButton} className="custom-button" onClick={() => this.search()}/>
+                        <div onClick={() => this.search()} className="custom-button">
+                            <Icon>search</Icon>
+                        </div>
                     </div>
                 </div>
                 <div className="transcription-table">
