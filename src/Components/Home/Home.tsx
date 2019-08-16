@@ -56,7 +56,7 @@ export default class Home extends React.Component<IProps, IState>{
         }else{
             this.setState({playingURL:url, playingVideoId: videoId})
         }
-        // this.state.hubConnection.invoke("UpdateComments");
+        this.state.hubConnection.invoke("UpdateComments");
     }
 
     public render() {

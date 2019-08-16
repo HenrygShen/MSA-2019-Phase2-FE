@@ -141,9 +141,9 @@ export default class CommentsArea extends React.Component<IProps, IState>{
                 />)
             })
             output.reverse();
-            
             this.setState({comments:output});
-        })
+            return;
+        });
     }
 
     public render() {
