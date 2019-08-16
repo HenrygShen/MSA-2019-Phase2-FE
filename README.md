@@ -11,7 +11,7 @@ How to run the application:
 ---
 Features (Advanced Requirements):
 
-1. Creation and usage of custom branding that is integreated into end product. E.g. Custom Logo's and theming.
+1. Creation and usage of custom branding that is integrated into end product. E.g. Custom Logo's and theming.
 2. Authentication (Authentication with API, and user registration. Password is hashed with BCrypt).
 3. Social Media Integration (Comment section for each video, and the ability to like comments and favourite videos).
 4. Use Relational Databases (Connecting to Azure SQL database with C# dapper package).
