@@ -32,9 +32,11 @@ class App extends React.Component<{}, IState>{
         super(props);
         this.state = {
             theme: 'dark',
-            userId: -1,
-            username: ''
+            userId: 1,
+            username: 'a'
         }
+
+
     }
 
     public isEmpty = (obj:any) => {
@@ -56,7 +58,7 @@ class App extends React.Component<{}, IState>{
 
     public render() {
         return (
-            <div>
+            <div className = "app-container">
                 {(this.state.username === '') ? 
                 <Login 
                     styles = {styles[this.state.theme]} 

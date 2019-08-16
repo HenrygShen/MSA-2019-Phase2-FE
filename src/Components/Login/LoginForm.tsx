@@ -60,7 +60,7 @@ export default class Login extends React.Component<IProps, IState>{
 
         const body = {"Password": this.state.password,
                     "Username": this.state.username}
-        return fetch("https://localhost:44307/api/users/Authenticate", {
+        return fetch("https://msascriberapido.azurewebsites.net/api/users/Authenticate", {
             body: JSON.stringify(body),
             headers: {
             Accept: "text/plain",

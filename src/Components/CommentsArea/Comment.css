@@ -1,0 +1,37 @@
+.comment-card {
+    display: flex;
+    padding: 0.5em;
+    margin-top: 1em;
+    border: 1px solid;
+}
+
+.comment-card .username {
+    width: 10%;
+    font-size: 1.5em;
+    font-weight: bolder;
+}
+
+.comment-card .comment {
+    word-wrap: break-word;
+    max-width: 500px;
+    width: 55%;
+}
+
+.comment-card .timestamp {
+    width: 15%;
+}
+
+.comment-card .likeButton {
+    width: 5%;
+}
+
+.comment-card .likes {
+    width: 5%;
+}
+
+.comment-card .video-list-close {
+    display: flex;
+    justify-content: flex-end;
+    width: 10%;
+}
+

@@ -1,9 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
+html {
+    height: 100%;
+}
 body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
+  height: 100%;
+}
+
+#root {
+    height: 100%;
 }
 
 .header {
@@ -47,37 +55,12 @@ body {
   width: 60px;
 }
 
-.caption-area {
-  background-color: #CCDEE2;
-  margin-top: 20px;
-  padding: 30px;
-}
 
 .captionTable {
   cursor: pointer;
 }
 
-.player {
-  background-color: black;
-}
 
-nav{
-  display:flex;
-  justify-content: space-around;
-  align-items: center;
-  min-height: 5vh;
-  background-color: lightblue;
-}
-
-li {
-    padding: 10%;
-    margin-right: 10px;
-}
-
-.test {
-    display: flex;
-    justify-content: space-between;
-}
 
 .search-bar {
     margin-right: 10px;

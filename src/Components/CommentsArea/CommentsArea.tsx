@@ -25,7 +25,7 @@ export default class CommentsArea extends React.Component<IProps, IState>{
         this.state = { 
             body: [],
             comments: [],
-            hubConnection: new this.signalR.HubConnectionBuilder().withUrl("https://localhost:44307/hub").build(),
+            hubConnection: new this.signalR.HubConnectionBuilder().withUrl("https://msascriberapido.azurewebsites.net/hub").build(),
             newComment: '',
             submitted: true
         }
@@ -46,7 +46,7 @@ export default class CommentsArea extends React.Component<IProps, IState>{
                     "like": like,
                     "userId": this.props.userId
                     }
-        return fetch("https://localhost:44307/api/Comments/UpdateLikes", {
+        return fetch("https://msascriberapido.azurewebsites.net/api/Comments/UpdateLikes", {
             body: JSON.stringify(body),
             headers: {
             Accept: "text/plain",
@@ -88,7 +88,7 @@ export default class CommentsArea extends React.Component<IProps, IState>{
                     "username": this.props.user,
                     "videoId": this.props.videoId
                     }
-        return fetch("https://localhost:44307/api/Comments/", {
+        return fetch("https://msascriberapido.azurewebsites.net/api/Comments/", {
             body: JSON.stringify(body),
             headers: {
             Accept: "text/plain",
@@ -104,7 +104,7 @@ export default class CommentsArea extends React.Component<IProps, IState>{
     }
 
     public deleteComment = (commentId: number) => {
-        fetch('https://localhost:44307/api/Comments/'+commentId,{
+        fetch('https://msascriberapido.azurewebsites.net/api/Comments/'+commentId,{
             method:'DELETE'
         }).then((ret:any) => {
             return ret.json();
@@ -114,7 +114,7 @@ export default class CommentsArea extends React.Component<IProps, IState>{
     }
 
     public updateList = () => {
-        fetch('https://localhost:44307/api/Comments/'+this.props.videoId,{
+        fetch('https://msascriberapido.azurewebsites.net/api/Comments/'+this.props.videoId,{
             method:'GET'
         }).then((ret:any) => {
             return ret.json();
