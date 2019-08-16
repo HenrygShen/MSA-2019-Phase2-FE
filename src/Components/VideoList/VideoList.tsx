@@ -21,7 +21,7 @@ export default class VideoList extends React.Component<IProps,IState>{
     public constructor(props:any){
         super(props);
         this.state = {
-            hubConnection: new this.signalR.HubConnectionBuilder().withUrl("https://localhost:44307/hub").build(),
+            hubConnection: new this.signalR.HubConnectionBuilder().withUrl("https://msascriberapido.azurewebsites.net/hub").build(),
             input: "",
             videoList: []
         }
@@ -29,7 +29,7 @@ export default class VideoList extends React.Component<IProps,IState>{
     }
 
     public deleteVideo = (id:any) => {
-        fetch("https://localhost:44307/api/Videos/"+id,{
+        fetch("https://msascriberapido.azurewebsites.net/api/Videos/"+id,{
             method:'DELETE'
         }).then(() => {
             this.updateList()
@@ -41,7 +41,7 @@ export default class VideoList extends React.Component<IProps,IState>{
     }
 
     public updateList = () => {
-        fetch('https://localhost:44307/api/Videos',{
+        fetch('https://msascriberapido.azurewebsites.net/api/Videos',{
             method:'GET'
         }).then((ret:any) => {
             return ret.json();
@@ -78,7 +78,7 @@ export default class VideoList extends React.Component<IProps,IState>{
         }
         console.log(videoURL);
         const body = {"url": videoURL}
-        fetch("https://localhost:44307/api/Videos", {
+        fetch("https://msascriberapido.azurewebsites.net/api/Videos", {
             body: JSON.stringify(body),
             headers: {
             Accept: "text/plain",
@@ -103,7 +103,7 @@ export default class VideoList extends React.Component<IProps,IState>{
             "path":"/isFavourite",
             "value":!video.isFavourite,
         }]
-        fetch("https://localhost:44307/api/Videos/update/"+video.videoId, {
+        fetch("https://msascriberapido.azurewebsites.net/api/Videos/update/"+video.videoId, {
             body:JSON.stringify(toSend),
             headers: {
               Accept: "text/plain",
