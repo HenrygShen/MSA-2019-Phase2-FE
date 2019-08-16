@@ -36,7 +36,6 @@ class App extends React.Component<{}, IState>{
             username: 'a'
         }
 
-
     }
 
     public isEmpty = (obj:any) => {

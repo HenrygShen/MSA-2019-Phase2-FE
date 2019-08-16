@@ -1,21 +1,20 @@
 import * as React from 'react';
 
-import liked from './likedbutton.png';
-import unliked from './unlikedbutton.png';
 import "./CommentsArea.css";
+import Comment from './Comment';
 
 interface IState {
     hubConnection: any,
     comments: any,
     newComment: string,
-    body: any,
-    submitted: boolean
+    body: any
 }
 
 interface IProps {
     videoId: number,
     userId: number,
-    user: string
+    user: string,
+    styles: any
 }
 
 export default class CommentsArea extends React.Component<IProps, IState>{
@@ -26,8 +25,7 @@ export default class CommentsArea extends React.Component<IProps, IState>{
             body: [],
             comments: [],
             hubConnection: new this.signalR.HubConnectionBuilder().withUrl("https://msascriberapido.azurewebsites.net/hub").build(),
-            newComment: '',
-            submitted: true
+            newComment: ''
         }
     }
 
@@ -71,12 +69,12 @@ export default class CommentsArea extends React.Component<IProps, IState>{
     }
 
     public addComment = () => {
-        this.setState({ submitted: true });
 
         // stop here if form is invalid
         if (!(this.state.newComment)) {
             return;
         }
+        
         const dateVal = new Date().getTime();
         const date = new Date( parseFloat( dateVal.toString()));
         const dateString = date.toString();
@@ -88,6 +86,8 @@ export default class CommentsArea extends React.Component<IProps, IState>{
                     "username": this.props.user,
                     "videoId": this.props.videoId
                     }
+        this.setState({ newComment: '' });
+
         return fetch("https://msascriberapido.azurewebsites.net/api/Comments/", {
             body: JSON.stringify(body),
             headers: {
@@ -113,23 +113,32 @@ export default class CommentsArea extends React.Component<IProps, IState>{
         })
     }
 
+    public onKeyDown = (event:any) => {
+        if (event.keyCode === 13) {
+            this.addComment();
+        }
+    }
+
     public updateList = () => {
         fetch('https://msascriberapido.azurewebsites.net/api/Comments/'+this.props.videoId,{
             method:'GET'
         }).then((ret:any) => {
             return ret.json();
         }).then((result:any) => {
-            const output = result.map((comment: any, index: number) => {
-                return (<tr key = {`${Math.random()} ${Math.random()}`}>
-                    <td className="">{comment.username}</td>
-                    <td className=" something"><span className="comment-overflow">{ comment.comment }</span></td>
-                    <td className="">{comment.timeStamp}</td>
-                    <td className="">{this.checkLiked(comment.likesList) ? <img src={liked} className="custom-button" onClick={() => this.handleLike(comment.commentId, false)}/>
-                                                :<img src={unliked} className="custom-button" onClick={() => this.handleLike(comment.commentId, true)}/>}
-                    </td>
-                    <td className="">{comment.likes}</td>
-                    <td className=" video-list-close">{(comment.username === this.props.user) && <button onClick={() => this.deleteComment(comment.commentId)}>Delete</button>}</td>
-                </tr>)
+            const output = result.map((comment: any) => {
+                return (<Comment 
+                    key = {`${Math.random()}`}
+                    username = {comment.username}
+                    comment = {comment.comment}
+                    handleLike={this.handleLike}
+                    timeStamp = {comment.timeStamp}
+                    deleteComment={this.deleteComment}
+                    isLiked = {this.checkLiked(comment.likesList)}
+                    likes = {comment.likes}
+                    styles={this.props.styles}
+                    user = {this.props.user}
+                    commentId = {comment.commentId}
+                />)
             })
             output.reverse();
             
@@ -139,7 +148,7 @@ export default class CommentsArea extends React.Component<IProps, IState>{
 
     public render() {
         return (
-            <div>
+            <div className = "comment-section-container">
                 <div className="comments-header">
                     <h1><span className="red-heading">Comments</span></h1>
                 </div>
@@ -147,16 +156,16 @@ export default class CommentsArea extends React.Component<IProps, IState>{
                     <input
                         className="comment-input"
                         placeholder="Enter a comment here"
+                        onKeyDown={this.onKeyDown}
+                        value={this.state.newComment}
                         onChange={(event: any) => this.setState({ newComment: event.target.value })}
                     />
-                    <button onClick={this.addComment}>Submit</button>
+                    <button style = {{color: this.props.styles.color, borderColor: this.props.styles.color}} onClick={this.addComment}>Submit</button>
                 </div>
 
-                <table className="table">
-                    <tbody>
+                <div className = "comment-table">
                     {this.state.comments}
-                    </tbody>
-                </table>
+                </div>
             </div>    
         )
     }

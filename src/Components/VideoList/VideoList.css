@@ -5,6 +5,14 @@
     flex:1;
 }
 
+.video-list {
+    /* background-color: #F5F5F5; */
+    background-color: #CCDEE2;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 400px;
+  }
+
 .custom-button {
     width: 20px;
     height: 20px;

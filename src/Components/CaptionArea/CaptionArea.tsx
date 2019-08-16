@@ -37,14 +37,13 @@ export default class CaptionArea extends React.Component<IProps, IState>{
             }).then(response => {
                 return response.json()
             }).then(answer => {
-                console.log(answer);
                 this.setState({result:answer},()=>this.makeTableBody())
             })
         }
     }
 
     public handleTableClick = (videoUrl:any, timedURL: string, videoId: number) => {
-        window.scrollTo(0,0);
+        
         this.props.play(videoUrl + "&t=" + timedURL + "s", videoId.toString());
     }
 
@@ -115,13 +114,14 @@ export default class CaptionArea extends React.Component<IProps, IState>{
                         </div>
                     </div>
                 </div>
+                {(this.state.body.length > 0) ?
                 <div className="transcription-table">
                     <table id="transcriptions">
                         <tbody>
                             <tr>
-                                <th>Time</th>
-                                <th>Caption</th>
-                                <th>Video</th>
+                                <th style = {{color: this.props.styles.color}}>Time</th>
+                                <th style = {{color: this.props.styles.color}}>Caption</th>
+                                <th style = {{color: this.props.styles.color}}>Video</th>
                             </tr>
                         </tbody>
                         <tbody>
@@ -129,6 +129,10 @@ export default class CaptionArea extends React.Component<IProps, IState>{
                         </tbody>
                     </table>
                 </div>
+                :
+                null
+                }
+
             </div>
             
         )

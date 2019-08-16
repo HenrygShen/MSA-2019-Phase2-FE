@@ -5,6 +5,7 @@ import CaptionArea from '../CaptionArea/CaptionArea';
 import CommentsArea from '../CommentsArea/CommentsArea';
 import VideoList from '../VideoList/VideoList';
 import Header from '../Header/Header';
+import './Home.css';
 
 interface IState {
     hubConnection: any,
@@ -54,44 +55,46 @@ export default class Home extends React.Component<IProps, IState>{
         }else{
             this.setState({playingURL:url, playingVideoId: videoId})
         }
-        this.state.hubConnection.invoke("UpdateComments");
+        // this.state.hubConnection.invoke("UpdateComments");
     }
 
     public render() {
         const { styles } = this.props;
         return (
-            <div style = {{backgroundColor: styles.backgroundColor, color: styles.color}}>
-                <Header logout={this.props.logout} styles = {styles}/>
-                <div className="container">
-                <h1>Hi {this.props.user}!</h1>
-                <div className="row">
-                    <div className="col-7">
-                        <ReactPlayer
-                            className="player"
-                            ref={this.setRef}
-                            controls={true}
-                            url={this.state.playingURL}
-                            width="100%"
-                            height="400px"
-                            playing={true}
-                                config={{
-                                youtube: {
-                                playerVars: { showinfo: 1 },
-                                preload: true
+            <div className = "home-container" style = {{ backgroundColor: styles.backgroundColor, color: styles.color}}>
+                <Header user={this.props.user} logout={this.props.logout} styles = {styles}/>
+                <div className="main-container">
+                    <div className = "video-container">
+                        <div className = "player-container">
+                            <ReactPlayer
+                                className="player"
+                                ref={this.setRef}
+                                controls={true}
+                                url={this.state.playingURL}
+                                width="100%"
+                                height="400px"
+                                playing={true}
+                                    config={{
+                                    youtube: {
+                                    playerVars: { showinfo: 1 },
+                                    preload: true
+                                    }
                                 }
                             }
-                        }
-                        />
+                            />
+                        </div>
+                        <div className = "list-container">
+                            <VideoList styles = {styles} play={this.updateURL} />
+                        </div>
                     </div>
-                    <div className="col-5">
-                        <VideoList styles = {styles} play={this.updateURL} />
+                    <div style = {{width: '100%'}}>
+                    <CaptionArea styles = {styles} currentVideo={this.state.playingURL} play={this.updateURL} />
+
                     </div>
+                    { this.state.playingVideoId !== -1 &&
+                        <CommentsArea styles = {styles} videoId={this.state.playingVideoId} user={this.props.user} userId={this.props.userId}/>
+                    }
                 </div>
-                <CaptionArea styles = {styles} currentVideo={this.state.playingURL} play={this.updateURL} />
-                { this.state.playingVideoId !== -1 &&
-                    <CommentsArea videoId={this.state.playingVideoId} user={this.props.user} userId={this.props.userId}/>
-                }
-            </div>
             </div>
 
         )

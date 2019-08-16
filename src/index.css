@@ -1,27 +1,20 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
-html {
-    height: 100%;
-}
 body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
-  height: 100%;
+  
 }
 
-#root {
-    height: 100%;
-}
+.red-heading {
+    color: #C1263A;
+  }
 
 .header {
   background-color: lightblue;
   padding-top: 10px;
   margin-bottom: 20px;
-}
-
-.red-heading {
-  color: #C1263A;
 }
 
 .play-heading {
@@ -37,30 +30,15 @@ body {
   padding: 7px;
 }
 
-.video-list {
-  /* background-color: #F5F5F5; */
-  background-color: #CCDEE2;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  height: 400px;
-}
 
 .video-list button {
   border: none;
   background-color: #CCDEE2;
 }
 
-
-.video-list-close {
-  width: 60px;
-}
-
-
 .captionTable {
   cursor: pointer;
 }
-
-
 
 .search-bar {
     margin-right: 10px;

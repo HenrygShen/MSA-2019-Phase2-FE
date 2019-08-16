@@ -13,7 +13,7 @@ const Comment = (props: any) => {
             <div className = "timestamp">{timeStamp}</div>
             <div className = "likeButton"><img src={(isLiked) ? liked : unliked} className="custom-button" onClick={() => props.handleLike(commentId, !isLiked)}/></div>
             <div className = "likes">{likes}</div>
-            <div className = "video-list-close">{(username === user) && <button onClick={() => props.deleteComment(commentId)}>Delete</button>}</div>
+            <div className = "video-list-close">{(username === user) && <button style = {{color: props.styles.color, borderColor: props.styles.color}}onClick={() => props.deleteComment(commentId)}>Delete</button>}</div>
         </div>
     )
 }

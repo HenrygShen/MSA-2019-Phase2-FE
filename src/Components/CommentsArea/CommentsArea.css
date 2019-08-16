@@ -5,6 +5,12 @@
     padding-bottom: 1%;
 }
 
+.comment-section-container {
+    margin-top: 1em;
+    height: 50%;
+    padding-bottom: 3em;
+}
+
 .comment-input-container {
     display:flex;
     justify-content: space-between;
@@ -12,14 +18,27 @@
 
 .comment-input {
     width: 100%;
-    border: 1px solid black;
 }
 
-.comment-overflow {
-    word-wrap: break-word;
+.comment-input-container button {
+    padding: 0.5em;
+    border: 1px solid;
+    background: transparent;
 }
 
-.something {
-    max-width: 500px;
-    width: 500px;
+
+.comment-table {
+    width: 100%;
+}
+
+@media only screen and (max-width: 1000px) {
+    .comment-section-container h1 {
+        font-size: 1.4em;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .comment-section-container h1 {
+        font-size: 1.3em;
+    }
 }

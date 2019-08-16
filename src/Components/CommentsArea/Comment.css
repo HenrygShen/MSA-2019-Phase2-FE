@@ -3,6 +3,7 @@
     padding: 0.5em;
     margin-top: 1em;
     border: 1px solid;
+    width: 100%;
 }
 
 .comment-card .username {
@@ -13,15 +14,17 @@
 
 .comment-card .comment {
     word-wrap: break-word;
-    max-width: 500px;
     width: 55%;
 }
 
 .comment-card .timestamp {
+    text-align: center;
     width: 15%;
 }
 
 .comment-card .likeButton {
+    display: flex;
+    justify-content: flex-end;
     width: 5%;
 }
 
@@ -32,6 +35,14 @@
 .comment-card .video-list-close {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     width: 10%;
 }
+
+.comment-card .video-list-close button {
+    padding: 0.5em;
+    border: 1px solid;
+    background: transparent;
+}
+
 
