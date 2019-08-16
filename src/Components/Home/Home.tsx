@@ -20,6 +20,7 @@ interface IProps {
     styles: any,
     user: string,
     userId: number,
+    toggleTheme: any
 }
 
 export default class Home extends React.Component<IProps, IState>{
@@ -62,7 +63,7 @@ export default class Home extends React.Component<IProps, IState>{
         const { styles } = this.props;
         return (
             <div className = "home-container" style = {{ backgroundColor: styles.backgroundColor, color: styles.color}}>
-                <Header user={this.props.user} logout={this.props.logout} styles = {styles}/>
+                <Header user={this.props.user} toggleTheme = {this.props.toggleTheme} logout={this.props.logout} styles = {styles}/>
                 <div className="main-container">
                     <div className = "video-container">
                         <div className = "player-container">

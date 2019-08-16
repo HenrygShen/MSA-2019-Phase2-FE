@@ -46,3 +46,25 @@
 }
 
 
+@media only screen and (max-width: 800px) {
+    .comment-card .comment {
+        width: 40%;
+    }
+
+    .comment-card .comment {
+        width: 40%;
+    }
+
+    .comment-card .likeButton {
+        width: 10%;
+    }
+    
+    .comment-card .likes {
+        width: 10%;
+    }
+    
+    .comment-card .video-list-close {
+        width: 15%;
+    }
+    
+}

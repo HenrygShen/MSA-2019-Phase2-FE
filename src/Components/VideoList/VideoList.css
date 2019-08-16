@@ -6,8 +6,6 @@
 }
 
 .video-list {
-    /* background-color: #F5F5F5; */
-    background-color: #CCDEE2;
     overflow-x: hidden;
     overflow-y: scroll;
     height: 400px;
@@ -19,8 +17,23 @@
     margin-right: 10px;
 }
 
+.right-header {
+    display: flex;
+    align-items: center;
+}
+
 .video-list h1 {
     font-size: 1.2em;
+}
+
+.add-icon {
+    cursor: pointer;
+    padding-right: 0.2em;
+}
+
+.video-list button {
+    background: transparent;
+    border: none;
 }
 
 

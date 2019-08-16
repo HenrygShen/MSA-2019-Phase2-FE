@@ -32,10 +32,10 @@ class App extends React.Component<{}, IState>{
         super(props);
         this.state = {
             theme: 'dark',
-            userId: 1,
-            username: 'a'
+            userId: -1,
+            username: ''
         }
-
+        document.body.style.backgroundColor = styles[this.state.theme].backgroundColor;
     }
 
     public isEmpty = (obj:any) => {
@@ -45,6 +45,12 @@ class App extends React.Component<{}, IState>{
             }  
         }
         return true;
+    }
+
+    public toggleTheme = () => {
+        const theme = this.state.theme === 'dark' ? 'light' : 'dark';
+        document.body.style.backgroundColor = styles[theme].backgroundColor;
+        this.setState({ theme: (this.state.theme === 'dark') ? 'light' : 'dark'});
     }
 
     public login = (name: string, id: number) => {
@@ -57,7 +63,7 @@ class App extends React.Component<{}, IState>{
 
     public render() {
         return (
-            <div className = "app-container">
+            <div className = "app-container" style = {{backgroundColor: styles[this.state.theme].backgroundColor}}>
                 {(this.state.username === '') ? 
                 <Login 
                     styles = {styles[this.state.theme]} 
@@ -66,6 +72,7 @@ class App extends React.Component<{}, IState>{
                 :
                 <Home 
                     styles = {styles[this.state.theme]} 
+                    toggleTheme = {this.toggleTheme}
                     logout={this.logout} 
                     user={this.state.username} 
                     userId={this.state.userId}/>

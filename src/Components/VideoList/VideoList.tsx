@@ -2,8 +2,7 @@ import Close from '@material-ui/icons/Close'
 import Star from '@material-ui/icons/Star'
 import StarBorder from '@material-ui/icons/StarBorder'
 import * as React from 'react'
-
-import customButton from "./searchicon.png";
+import Icon from '@material-ui/core/Icon'
 import './VideoList.css';
 
 interface IState{
@@ -49,11 +48,11 @@ export default class VideoList extends React.Component<IProps,IState>{
         }).then((result:any) => {
             const output:any[] = []
             result.forEach((video:any) => {
-                const row = (<tr key = {`${Math.random()} ${Math.random()}`}>
+                const row = (<tr key = {`${Math.random()} ${Math.random()}`} style = {{ borderColor: this.props.styles.color}}>
                     <td className="align-middle" onClick={() => this.handleLike(video)}>{video.isFavourite === true?<Star color="primary"/>:<StarBorder/>}</td>
                     <td className="align-middle" onClick={() => this.playVideo(video.webUrl, video.videoId)}><img src={video.thumbnailUrl} width="100px" alt="Thumbnail"/></td>
                     <td className="align-middle" onClick={() => this.playVideo(video.webUrl, video.videoId)}>{video.videoTitle}</td>
-                    <td className=" align-middle video-list-close"><button style = {{backgroundColor: this.props.styles.backgroundColor2, color: this.props.styles.color}} onClick={() => this.deleteVideo(video.videoId)}><Close /></button></td>
+                    <td className=" align-middle video-list-close"><button onClick={() => this.deleteVideo(video.videoId)}><Close color="inherit"/></button></td>
                 </tr>)
                 if(video.isFavourite){
                     output.unshift(row);
@@ -141,7 +140,9 @@ export default class VideoList extends React.Component<IProps,IState>{
                         onKeyDown={this.keyPress}
                         value = {this.state.input}
                         />
-                        <img src={customButton} className="custom-button" onClick={this.addVideo}/>
+                        <div className = "add-icon"> 
+                            <Icon>add</Icon>
+                        </div>
                     </div>
                 </div>
                 

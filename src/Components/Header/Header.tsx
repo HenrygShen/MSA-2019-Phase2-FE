@@ -8,7 +8,8 @@ interface IState {
 interface IProps {
     logout:any,
     user: string,
-    styles: any
+    styles: any,
+    toggleTheme: any
 }
 
 export default class Header extends React.Component<IProps,IState> {
@@ -26,7 +27,8 @@ export default class Header extends React.Component<IProps,IState> {
                 <h1 style={{color: styles.color}}><span className="red-heading">Video</span>Lounge</h1>
                 <div className = "main-header-content">
                     <div className="header-greeting">Welcome {this.props.user}!</div>
-                    <button style={{color: styles.color}} className="logout-button" onClick={this.props.logout}>Logout</button>
+                    <div style={{color: styles.color}} className="logout-button" onClick={this.props.toggleTheme}>Toggle theme</div>
+                    <div style={{color: styles.color}} className="logout-button" onClick={this.props.logout}>Logout</div>
                 </div>
             </div>
         )
