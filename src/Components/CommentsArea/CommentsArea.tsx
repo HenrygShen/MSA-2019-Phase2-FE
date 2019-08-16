@@ -24,7 +24,7 @@ export default class CommentsArea extends React.Component<IProps, IState>{
         this.state = { 
             body: [],
             comments: [],
-            hubConnection: new this.signalR.HubConnectionBuilder().withUrl("https://msascriberapido.azurewebsites.net/hub").build(),
+            hubConnection: new this.signalR.HubConnectionBuilder().withUrl("https://localhost:44307/hub").build(),
             newComment: ''
         }
     }
@@ -44,7 +44,7 @@ export default class CommentsArea extends React.Component<IProps, IState>{
                     "like": like,
                     "userId": this.props.userId
                     }
-        return fetch("https://msascriberapido.azurewebsites.net/api/Comments/UpdateLikes", {
+        return fetch("https://localhost:44307/api/Comments/UpdateLikes", {
             body: JSON.stringify(body),
             headers: {
             Accept: "text/plain",
@@ -88,7 +88,7 @@ export default class CommentsArea extends React.Component<IProps, IState>{
                     }
         this.setState({ newComment: '' });
 
-        return fetch("https://msascriberapido.azurewebsites.net/api/Comments/", {
+        return fetch("https://localhost:44307/api/Comments/", {
             body: JSON.stringify(body),
             headers: {
             Accept: "text/plain",
@@ -104,7 +104,7 @@ export default class CommentsArea extends React.Component<IProps, IState>{
     }
 
     public deleteComment = (commentId: number) => {
-        fetch('https://msascriberapido.azurewebsites.net/api/Comments/'+commentId,{
+        fetch('https://localhost:44307/api/Comments/'+commentId,{
             method:'DELETE'
         }).then((ret:any) => {
             return ret.json();
@@ -120,7 +120,7 @@ export default class CommentsArea extends React.Component<IProps, IState>{
     }
 
     public updateList = () => {
-        fetch('https://msascriberapido.azurewebsites.net/api/Comments/'+this.props.videoId,{
+        fetch('https://localhost:44307/api/Comments/'+this.props.videoId,{
             method:'GET'
         }).then((ret:any) => {
             return ret.json();

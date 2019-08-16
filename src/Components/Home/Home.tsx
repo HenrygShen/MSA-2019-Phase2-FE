@@ -28,7 +28,7 @@ export default class Home extends React.Component<IProps, IState>{
     public constructor(props: any) {
         super(props);
         this.state = {
-            hubConnection: new this.signalR.HubConnectionBuilder().withUrl("https://msascriberapido.azurewebsites.net/hub").build(),
+            hubConnection: new this.signalR.HubConnectionBuilder().withUrl("https://localhost:44307/hub").build(),
             player: null,
             playingURL: "",
             playingVideoId: -1,

@@ -52,7 +52,7 @@ export default class SignupForm extends React.Component<{}, IState>{
 
         const body = {"Password": this.state.password,
                     "Username": this.state.username}
-        return fetch("https://msascriberapido.azurewebsites.net/api/users/Signup", {
+        return fetch("https://localhost:44307/api/users/Signup", {
             body: JSON.stringify(body),
             headers: {
             Accept: "text/plain",
